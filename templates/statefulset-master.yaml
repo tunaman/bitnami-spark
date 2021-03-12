@@ -64,9 +64,9 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       {{- end }}
       containers:
-      {{- if .Values.initContainers }}
+      {{- with .Values.initContainers }}
       initContainers:
-      {{ include "common.tplvalues.render" (dict "value" .Values.initContainers "context" $) | trim | nindent 8 }}
+      {{- toYaml . | nindent 6 }}
       {{- end }}
         - name: spark-master
           image: {{ template "spark.image" . }}
