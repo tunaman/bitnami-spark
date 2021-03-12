@@ -66,7 +66,7 @@ spec:
       containers:
       {{- with .Values.initContainers }}
       initContainers:
-      {{- toYaml . | nindent 8 }}
+      {{- toYaml . | nindent 6 }}
       {{- end }}
         - name: spark-master
           image: {{ template "spark.image" . }}
