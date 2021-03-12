@@ -64,6 +64,10 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       {{- end }}
       containers:
+      {{- if .Values.initContainers }}
+      initContainers:
+      {{ include "common.tplvalues.render" (dict "value" .Values.initContainers "context" $) | trim | nindent 8 }}
+      {{- end }}
         - name: spark-master
           image: {{ template "spark.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
@@ -179,7 +183,16 @@ spec:
           {{- if .Values.master.resources }}
           resources: {{- toYaml .Values.master.resources | nindent 12 }}
           {{- end }}
+      }
+      }
       volumes:
+        {{- if .Values.master.configurationConfigMap }}
+        - name: config-dst
+          emptyDir: {}
+        - name: config-src
+          configMap:
+            name: {{ .Values.master.configurationConfigMap }}
+        {{- end }}        
         {{- if .Values.master.configurationConfigMap }}
         - name: config
           configMap:
