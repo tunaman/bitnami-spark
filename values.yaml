@@ -32,17 +32,17 @@ image:
 # Additional initContainers (e.g. for setting file permission as shown below)
 initContainers: []
   # The "volume-permissions" init container is required if you run into permission issues.
-  - name: spark-env-permissions
-    image: busybox:1.31.1
-    command:
-      - bash
-      - -c
-      - cd /cmsrc; cp -r ./ /opt/bitnami/spark/conf/; chmod +x /opt/bitnami/spark/conf/spark-env.sh
-    volumeMounts:
-      - name: config-dst
-        mountPath: cmdst
-      - name: config-src
-        mountPath: cmsrc
+  # - name: spark-env-permissions
+  #   image: busybox:1.31.1
+  #   command:
+  #     - bash
+  #     - -c
+  #     - cd /cmsrc; cp -r ./ /opt/bitnami/spark/conf/; chmod +x /opt/bitnami/spark/conf/spark-env.sh
+  #   volumeMounts:
+  #     - name: config-dst
+  #       mountPath: cmdst
+  #     - name: config-src
+  #       mountPath: cmsrc
 
 ## Enable HOST Network
 ## If hostNetwork true ->  dnsPolicy is set to ClusterFirstWithHostNet
